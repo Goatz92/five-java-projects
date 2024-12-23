@@ -28,17 +28,17 @@ import java.util.Random;
 
 public class Project01Main {
 
-    static final int ARRAY_SIZE = 49; //The standard maximum size of the array
+    static final int MAX_ARRAY_SIZE = 49; //The maximum size the array can have
+    static final int ARRAY_SIZE = 10; // The current size of the array
+    static int[] arr = new int[ARRAY_SIZE]; //Empty array to be populated and handled.
     static final String FILE_PATH = "C:/tmp/randomNumbers.txt"; // File path for saving and reading the random numbers
     static final String OUTPUT_FILE_PATH = "C:/tmp/validCombinations.txt"; //File path for final txt file containing all combinations.
+    static Random rand = new Random(); // The randomizer used in following methods
 
     public static void main(String[] args) {
 
-        //Empty array to be populated and handled.
-        int[] arr;
-
         // Output random numbers to a file
-        rngFileOutput();
+        rngFileOutput(rand);
 
         // Input random numbers from the file
         arr = rngFileInput();
@@ -61,10 +61,8 @@ public class Project01Main {
      * But tries to simulate a scenario where we are not the ones producing the list of numbers
      * So we can have different results in each run, for more accurate testing.
      */
-    public static void rngFileOutput() {
+    public static void rngFileOutput(Random rand) {
         int[] rngArray = new int[ARRAY_SIZE];
-
-        Random rand = new Random();
 
         // Populate the array with random integers ranging from 1 to 49.
         //TODO Currently the array is filled with random integers
@@ -73,9 +71,8 @@ public class Project01Main {
         // Then after shorting the array the numbers will be 1,2,3,...,49 in order
         // Change the ARRAY_SIZE to something smaller than 49
         // and change for loop to generate unique numbers each time
-        for (int i = 0; i < ARRAY_SIZE; i++) {
-            rngArray[i] = (rand.nextInt(49) + 1);     // rand.nextInt produces numbers between 0 and 48. +1 lets us meet the intended range.
-        }
+        rngArray = arrayPopulate(arr, rand);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (int i = 0; i < ARRAY_SIZE; i++) {
                 writer.write(rngArray[i] + "\n");
@@ -84,6 +81,40 @@ public class Project01Main {
         } catch (IOException e) {
             System.err.println("Error occurred while writing file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Creates an array of all the numbers ranging from 1 to 49
+     * Shuffles the array (this step is detrimental when ARRAY_SIZE = 49)
+     * Shuffling the array is useful because the next step works linearly
+     * Ensures the numbers picked are in random order
+     * Linearly traverses the allNumbers array and copies each number
+     * To the array used in other methods
+     * @param arr The static array to be populated and returned
+     * @param rand random number generator
+     * @return the array filled with random numbers
+     */
+    public static int[] arrayPopulate(int[] arr, Random rand) {
+        int[] allNumbers = new int[MAX_ARRAY_SIZE];
+
+        //Create an array with numbers ranging from 1 to 49
+        for (int i = 0; i < allNumbers.length; i++) {
+            allNumbers[i] = i + 1;
+        }
+        // Shuffle the numbers of the array
+        for (int i = 0; i < allNumbers.length; i++) {
+            //Randomizing the index pointing to a random number in allNumbers array
+            int randomIndex = rand.nextInt(allNumbers.length);
+            //Swapping the elements between arrays
+            int temp = allNumbers[i];
+            allNumbers[i] = allNumbers[randomIndex];
+            allNumbers[randomIndex] = temp;
+        }
+        // Copy the Random numbers generated in allNumbers array to the main array (arr) used
+        for (int i = 0; i < ARRAY_SIZE; i++) { //TODO Find out how the System.arraycopy() class works
+            arr[i] = allNumbers[i];
+        }
+        return arr;
     }
 
     /**
