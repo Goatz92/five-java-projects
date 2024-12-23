@@ -67,6 +67,12 @@ public class Project01Main {
         Random rand = new Random();
 
         // Populate the array with random integers ranging from 1 to 49.
+        //TODO Currently the array is filled with random integers
+        // This produces duplicate numbers
+        // If we want to produce unique numbers when ARRAY_SIZE = 49;
+        // Then after shorting the array the numbers will be 1,2,3,...,49 in order
+        // Change the ARRAY_SIZE to something smaller than 49
+        // and change for loop to generate unique numbers each time
         for (int i = 0; i < ARRAY_SIZE; i++) {
             rngArray[i] = (rand.nextInt(49) + 1);     // rand.nextInt produces numbers between 0 and 48. +1 lets us meet the intended range.
         }
