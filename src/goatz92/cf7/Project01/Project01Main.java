@@ -65,12 +65,6 @@ public class Project01Main {
         int[] rngArray = new int[ARRAY_SIZE];
 
         // Populate the array with random integers ranging from 1 to 49.
-        //TODO Currently the array is filled with random integers
-        // This produces duplicate numbers
-        // If we want to produce unique numbers when ARRAY_SIZE = 49;
-        // Then after shorting the array the numbers will be 1,2,3,...,49 in order
-        // Change the ARRAY_SIZE to something smaller than 49
-        // and change for loop to generate unique numbers each time
         rngArray = arrayPopulate(rand);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
