@@ -1,6 +1,15 @@
 package goatz92.cf7.Project02;
 
-import javax.security.auth.Subject;
+/**
+ * Searches for the maximum sum of integers found in an array
+ * CF7 Algorithm explanation:
+ * Traverse the array
+ * The first for loop iterates from 0 to n - 1 (where n = arr.length)
+ * The second for loop iterates from j to n - 1 (where j = i)
+ * For each iteration we reset the subArraySum to 0
+ * Then we add the subArraySum to the current integer of the main array
+ *
+ */
 
 public class Project02Main {
 

@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class Project01Main {
 
-    static final int MAX_ARRAY_SIZE = 49; //The maximum size the array can have
+    static final int MAX_POSSIBLE_NUMBER = 49; //The maximum number that can be produced by rng
     static final int ARRAY_SIZE = 10; // The current size of the array
     static int[] arr = new int[ARRAY_SIZE]; //Empty array to be populated and handled.
     static final String FILE_PATH = "C:/tmp/randomNumbers.txt"; // File path for saving and reading the random numbers
@@ -71,7 +71,7 @@ public class Project01Main {
         // Then after shorting the array the numbers will be 1,2,3,...,49 in order
         // Change the ARRAY_SIZE to something smaller than 49
         // and change for loop to generate unique numbers each time
-        rngArray = arrayPopulate(arr, rand);
+        rngArray = arrayPopulate(rand);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (int i = 0; i < ARRAY_SIZE; i++) {
@@ -90,12 +90,12 @@ public class Project01Main {
      * Ensures the numbers picked are in random order
      * Linearly traverses the allNumbers array and copies each number
      * To the array used in other methods
-     * @param arr The static array to be populated and returned
      * @param rand random number generator
      * @return the array filled with random numbers
      */
-    public static int[] arrayPopulate(int[] arr, Random rand) {
-        int[] allNumbers = new int[MAX_ARRAY_SIZE];
+    public static int[] arrayPopulate(Random rand) {
+        int[] arr = new int [ARRAY_SIZE];
+        int[] allNumbers = new int[MAX_POSSIBLE_NUMBER];
 
         //Create an array with numbers ranging from 1 to 49
         for (int i = 0; i < allNumbers.length; i++) {
@@ -157,7 +157,7 @@ public class Project01Main {
      * @param arr The array read from the input file.
      */
     public static void validComboOutput(int[] arr) {
-
+        int count;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE_PATH))) {
             // Iterate through all combinations of 6 numbers
             for (int i = 0; i < arr.length - 5; i++) {
@@ -171,7 +171,6 @@ public class Project01Main {
 
                                     // Check if the combination meets the criteria
                                     if (isValidCombo(sixCombo)) {
-                                        //System.out.println("FoundOne");
                                         // Write the valid combination to the file
                                         writer.write(Arrays.toString(sixCombo));
                                         writer.newLine();
