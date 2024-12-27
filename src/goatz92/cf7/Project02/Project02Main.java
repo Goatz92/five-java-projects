@@ -1,14 +1,31 @@
 package goatz92.cf7.Project02;
 
-import javax.security.auth.Subject;
-
+/**
+ * 1) Solution one is more of a brute force approach to the solution.
+ * Traverses the array linearly and checks every
+ * finds all the possible contiguous sub arrays and
+ * calculates their sum.
+ * Complexity is O(n^2), because we need two for loops to traverse the array.
+ * 2) Solution two uses Kadane's algorithm
+ * Traverses the array and checks every contiguous number
+ * compares the localMaxSum at every index with the
+ * globalMaxSum and update the globalMaxSum accordingly.
+ * Complexity is O(n) because the algorithm requires only one
+ * for loop and one pass through the array.
+ */
 public class Project02Main {
 
     public static void main(String[] args) {
 
         int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        int maxSum = maxSumResult(arr);
-        System.out.println("The maximum sum of the array is: " + maxSum);
+
+        System.out.println("Brute Force approach: ");
+        int maxSumBrute = maxSumResult(arr);
+        System.out.println("The maximum sum of the array is: " + maxSumBrute);
+
+        System.out.println("Kadane's Algorithm solution: ");
+        int maxSumKadane = maxSumKadane(arr);
+        System.out.println("The maximum sum of the array is: " + maxSumKadane);
     }
 
     /**
@@ -22,18 +39,50 @@ public class Project02Main {
 
         // In this case could be set as currentSum = -100
         // Integer.MIN_VALUE counts for all possibilities
-        int currentMaxSum = Integer.MIN_VALUE; // The max sum found in each iteration
-        int subArraySum; // Temporary sum to be compared to currentMaxSum
+        int globalMaxSum = Integer.MIN_VALUE; // The max sum found in each iteration
+        int localMaxSum = 0; // Temporary sum to be compared to globalMaxSum
 
         for (int i = 0; i < arr.length; i++) {
-            subArraySum = 0; // Reset the temp array sum
+            localMaxSum = 0; // Reset the temp array sum
             for (int j = i; j < arr.length; j++) {
-                subArraySum += arr[j];
-                if (subArraySum > currentMaxSum) {
-                    currentMaxSum = subArraySum;
+                localMaxSum += arr[j];
+                if (localMaxSum > globalMaxSum) {
+                    globalMaxSum = localMaxSum;
                 }
             }
         }
-        return currentMaxSum;
+        return globalMaxSum;
+    }
+
+    public static int maxSumKadane (int[] arr) {
+
+        // In this case could be set as currentSum = -100
+        // Integer.MIN_VALUE counts for all possibilities
+        int globalMaxSum = Integer.MIN_VALUE; // The max sum found in each iteration
+        int localMaxSum = 0; // Temporary sum to be compared to globalMaxSum
+        int indexStart = 0; // The start index of the maxSum sub array
+        int indexEnd = 0; // The end index of maxSum sub array
+        int tempStart = 0; // Temporary start index
+
+        for (int i = 0; i < arr.length; i++) {
+            //Compares the localMaxSum with globalMaxSum at every index
+            localMaxSum = Math.max(arr[i], arr[i] + localMaxSum);
+            if (localMaxSum == arr[i]) {
+                tempStart = i;
+            }
+            //Updates globalMaxSum and saves the current start-end indexes
+            if (localMaxSum > globalMaxSum) {
+                globalMaxSum = localMaxSum;
+                indexEnd = i;
+                indexStart = tempStart; // Update start index when needed
+            }
+        }
+        System.out.print("Maximum sum sub array is: { ");
+        for (int i = 0; i < indexEnd; i++) {
+            System.out.print(arr[indexStart + i] + " ");
+        }
+        System.out.print("}");
+        System.out.println();
+        return globalMaxSum;
     }
 }
