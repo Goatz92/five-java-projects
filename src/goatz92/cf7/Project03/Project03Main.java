@@ -12,10 +12,12 @@ import java.util.Arrays;
  * The columns of the array represent the number of times the char has occurred.
  * Ignores white spaces by use of Character.isWhitespace java class.
  * Prints how many times every char has occurred. (char frequency)
+ *TODO Find a way to include all .txt files' encoding
  */
 public class Project03Main {
 
     static final int ARRAY_SIZE = 128; // The maximum size of the Array
+
     public static void main(String[] args) {
 
         String filePath = "C:/tmp/Test.txt"; //TODO Change file path to be given by user
@@ -35,7 +37,7 @@ public class Project03Main {
      * @param filePath The path to the .txt file to read.
      * @param charCount Array that stores char count
      */
-    private static void fileInputCharCount(String filePath, String[][] charCount) {
+    public static void fileInputCharCount(String filePath, String[][] charCount) {
 
         for (int i = 0; i < ARRAY_SIZE; i++) {
             charCount[i][0] = null;
@@ -58,21 +60,22 @@ public class Project03Main {
 
     /**
      * Updates the character count in the array.
+     * Adds each new char found to the array
      *
      * @param ch The character to count.
      * @param charCount The array to store character counts.
      */
-    private static void updateCharCount(int ch, String[][] charCount) {
+    public static void updateCharCount(int ch, String[][] charCount) {
 
         for (int i = 0; i < ARRAY_SIZE; i++) {
             if (charCount[i][0] != null && charCount[i][0].charAt(0) == ch) {
-                // Character found, increment the count
+                // Increments the count when new char is found
                 int count = Integer.parseInt(charCount[i][1]);
                 count++;
                 charCount[i][1] = String.valueOf(count);
                 break;
             } else if (charCount[i][0] == null) {
-                // New character, add it to the array
+                // Adds new char found, to the array
                 charCount[i][0] = String.valueOf((char) ch);
                 charCount[i][1] = "1";
                 break;
@@ -81,16 +84,19 @@ public class Project03Main {
     }
 
     /**
-     * Sorts the character count array and prints the frequencies.
+     * Sorts the character count array
+     * Prints each char's frequency
      *
      * @param charCount The array containing character counts.
      */
-    private static void printCharFrequency(String[][] charCount) {
+    public static void printCharFrequency(String[][] charCount) {
         // Sort the array by character
+        //TODO Copied from Chatgpt. Find a better way to sort the array
+        // or find out exactly how this works.
         Arrays.sort(charCount, (a, b) -> {
-            if (a[0] == null) return 1; // Put nulls at the end
+            if (a[0] == null) return 1; // Nulls at the end
             if (b[0] == null) return -1;
-            return a[0].compareTo(b[0]); // Sort by character
+            return a[0].compareTo(b[0]); // Sorts by character
         });
 
         // Prints frequency for each char
