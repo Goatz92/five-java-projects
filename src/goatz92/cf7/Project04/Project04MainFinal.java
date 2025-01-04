@@ -4,18 +4,38 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.*;
 
-public class test {
+/**
+ * Demo Tic Tac Toe game app
+ */
+public class Project04MainFinal {
 
-    static String[] board;
-    static String turn;
+    /*
+    In previous versions I tried to implement a different way to describe the board
+    Tried to create two different 2D arrays
+    One for the player named String[][]board
+    And one for the program named int[][]grid
+    I found out this was redundant because the board doesn't need to be two-dimensional.
+    Making the board "grid" one-dimensional simplifies it's use and coding methods.
+    We can think of the grid as:
+    For the array's positions 0 through 2 we have the first row and so on.
+    For the diagonals simply use position 0, 4 and 8 and vice versa(2, 4, 6)
+    And for columns use positions 0, 3, 6
+     */
+    static String[] board; //One dimensional board to be printed and handled
+    static String currentPlayer; //Determines the current player, First player is always X
+    static String currentPlayerName; //The current player's name as input by each user. Alternates between the two.
 
-    // CheckWinner method will
-    // decide the combination
-    // of three box given below.
+    //Check each line and diagonal for win condition
+    //Compare line variable string with each line of grid
+    //Determine winner or tie
     static String checkWinner() {
 
         for (int a = 0; a < 8; a++) {
             String line = null;
+            //Cases 0 to 3 check horizontal lines
+            //Cases 3 to 5 check vertical lines
+            //Cases 6 to 7 check diagonal lines
+            //If a reaches a = 8 then no win condition was found so it's a draw
             switch (a) {
                 case 0:
                     line = board[0] + board[1] + board[2];
@@ -42,19 +62,19 @@ public class test {
                     line = board[2] + board[4] + board[6];
                     break;
             }
-            //For X winner
+            //X wins
             if (line.equals("XXX")) {
                 return "X";
             }
-            // For O winner
+            // O wins
             else if (line.equals("OOO")) {
                 return "O";
             }
         }
 
         for (int a = 0; a < 9; a++) {
-            if (Arrays.asList(board).contains(
-                    String.valueOf(a + 1))) {
+            //Temporarily converts board to a list and checks if the playerChoice is already on the board and breaks
+            if (Arrays.asList(board).contains(String.valueOf(a + 1))) {
                 break;
             }
             else if (a == 8) {
@@ -62,105 +82,106 @@ public class test {
             }
         }
 
-        // To enter the X Or O at the exact place on board.
-        System.out.println(
-                turn + "'s turn; enter a slot number to place "
-                        + turn + " in:");
+        // Prints each player's choice on the board
+        System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
         return null;
-    }
-
-    // To print out the board.
-    /* |---|---|---|
-    | 1 | 2 | 3 |
-    |-----------|
-    | 4 | 5 | 6 |
-    |-----------|
-    | 7 | 8 | 9 |
-    |---|---|---|*/
-
-    static void printBoard() {
-
-        System.out.println("|---|---|---|");
-        System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
-        System.out.println("|-----------|");
-        System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
-        System.out.println("|-----------|");
-        System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
-        System.out.println("|---|---|---|");
     }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         board = new String[9];
-        turn = "X";
+        currentPlayer = "X";
         String winner = null;
+        String playerOne;
+        String playerTwo;
 
+
+        //Populate the board with numbers from 1 to 9
+        //This is essential because we need a way to match the board
+        //To each player's input
         for (int a = 0; a < 9; a++) {
             board[a] = String.valueOf(a + 1);
         }
 
         System.out.println("Welcome to 3x3 Tic Tac Toe.");
         printBoard();
-
-        System.out.println(
-                "X will play first. Enter a slot number to place X in:");
+        System.out.println("Player One: Please enter a name");
+        playerOne = in.nextLine();
+        currentPlayerName = playerOne;
+        System.out.println("Player Two: Please enter a name");
+        playerTwo = in.nextLine();
+        System.out.println(currentPlayerName + " will play first. Choose wisely");
 
         while (winner == null) {
-            int numInput;
+            int playerChoice;
 
-            // Exception handling.
-            // numInput will take input from user like from 1 to 9.
-            // If it is not in range from 1 to 9.
-            // then it will show you an error "Invalid input."
+            //Exception handling for playerChoice input
             try {
-                numInput = in.nextInt();
-                if (!(numInput > 0 && numInput <= 9)) {
-                    System.out.println(
-                            "Invalid input; re-enter slot number:");
+                playerChoice = in.nextInt();
+                if (!(playerChoice > 0 && playerChoice <= 9)) {
+                    System.out.println("Invalid input; re-enter slot number:");
                     continue;
                 }
             }
             catch (InputMismatchException e) {
-                System.out.println(
-                        "Invalid input; re-enter slot number:");
+                System.out.println("Invalid input; re-enter slot number:");
                 continue;
             }
 
-            // This game has two player x and O.
-            // Here is the logic to decide the turn.
-            if (board[numInput - 1].equals(
-                    String.valueOf(numInput))) {
-                board[numInput - 1] = turn;
+            //Check for current player's turn
+            //Populates the board with player's playerChoice
+            //Alternate currentPlayer string to change player's turn
+            if (board[playerChoice - 1].equals(String.valueOf(playerChoice))) {
+                board[playerChoice - 1] = currentPlayer;
 
-                if (turn.equals("X")) {
-                    turn = "O";
+                if (currentPlayer.equals("X")) {
+                    currentPlayer = "O";
+                    currentPlayerName = playerTwo;
                 }
                 else {
-                    turn = "X";
+                    currentPlayer = "X";
+                    currentPlayerName = playerOne;
                 }
-
                 printBoard();
                 winner = checkWinner();
             }
             else {
-                System.out.println(
-                        "Slot already taken; re-enter slot number:");
+                System.out.println("Slot already taken; re-enter slot number:");
             }
         }
 
-        // If no one win or lose from both player x and O.
-        // then here is the logic to print "draw".
+        //Checks for winner through static winner String
+        //Prints draw if no win condition was met
         if (winner.equalsIgnoreCase("draw")) {
-            System.out.println(
-                    "It's a draw! Thanks for playing.");
+            System.out.println("It's a draw! Thanks for playing.");
         }
+        //Prints winner when the win condition is met
+        else if (Objects.equals(currentPlayer, "O")){
+            System.out.println("Congratulations! " + playerOne + " You win!");
+            System.out.println("Thanks for playing.");
+        }
+        else if(Objects.equals(currentPlayer, "X")){
+            System.out.println("Congratulations! " + playerTwo + " You win!");
+            System.out.println("Thanks for playing.");
+        }
+        in.close(); //close the scanner
+    }
 
-        // For winner -to display Congratulations! message.
-        else {
-            System.out.println(
-                    "Congratulations! " + winner
-                            + "'s have won! Thanks for playing.");
-        }
-        in.close();
+    /**
+     * Prints out the first and each subsequent version of the board.
+     * Board layout:
+     * |-----------|
+     * | 1 | 2 | 3 |
+     * | 4 | 5 | 6 |
+     * | 7 | 8 | 9 |
+     * |-----------|
+     */
+    static void printBoard() {
+
+        System.out.println("|-----------|");
+        System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
+        System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
+        System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
+        System.out.println("|-----------|");
     }
 }

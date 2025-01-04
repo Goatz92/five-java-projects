@@ -3,7 +3,7 @@ package goatz92.cf7.Project04;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Project04Main {
+public class Project04WiP {
 
     //Grid map
     static int[][] grid = {
