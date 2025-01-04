@@ -3,6 +3,12 @@ package goatz92.cf7.Project04;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+//TODO Try out this implementation of the app
+// Find ways to make it work with two different two-dimensional grid versions
+// Solve current problems:
+// Set each grid position in a better and clearer way (currently set with 10 and 20)
+// Implement win con and draw state for switch/case
+// Finish up and make a working version
 public class Project04WiP {
 
     //Grid map
