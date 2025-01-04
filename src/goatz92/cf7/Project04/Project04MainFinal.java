@@ -9,15 +9,13 @@ public class test {
     static String[] board;
     static String turn;
 
-
     // CheckWinner method will
     // decide the combination
     // of three box given below.
-    static String checkWinner()
-    {
+    static String checkWinner() {
+
         for (int a = 0; a < 8; a++) {
             String line = null;
-
             switch (a) {
                 case 0:
                     line = board[0] + board[1] + board[2];
@@ -48,7 +46,6 @@ public class test {
             if (line.equals("XXX")) {
                 return "X";
             }
-
             // For O winner
             else if (line.equals("OOO")) {
                 return "O";
@@ -81,25 +78,18 @@ public class test {
     | 7 | 8 | 9 |
     |---|---|---|*/
 
-    static void printBoard()
-    {
+    static void printBoard() {
+
         System.out.println("|---|---|---|");
-        System.out.println("| " + board[0] + " | "
-                + board[1] + " | " + board[2]
-                + " |");
+        System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
         System.out.println("|-----------|");
-        System.out.println("| " + board[3] + " | "
-                + board[4] + " | " + board[5]
-                + " |");
+        System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
         System.out.println("|-----------|");
-        System.out.println("| " + board[6] + " | "
-                + board[7] + " | " + board[8]
-                + " |");
+        System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
         System.out.println("|---|---|---|");
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         board = new String[9];
         turn = "X";
@@ -173,4 +163,4 @@ public class test {
         }
         in.close();
     }
-    }
+}
