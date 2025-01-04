@@ -82,8 +82,8 @@ public class Project04MainFinal {
             }
         }
 
-        // Prints each player's choice on the board
-        System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
+        // Prints current player for clarity and continuity 
+        System.out.println(currentPlayerName + "'s turn. Choose wisely!");
         return null;
     }
 
@@ -103,7 +103,7 @@ public class Project04MainFinal {
             board[a] = String.valueOf(a + 1);
         }
 
-        System.out.println("Welcome to 3x3 Tic Tac Toe.");
+        System.out.println("Welcome to Tic Tac Toe!");
         printBoard();
         System.out.println("Player One: Please enter a name");
         playerOne = in.nextLine();
