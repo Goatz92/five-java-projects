@@ -12,13 +12,7 @@ import java.util.Arrays;
  * The columns of the array represent the number of times the char has occurred.
  * Ignores white spaces by use of Character.isWhitespace java class.
  * Prints how many times every char has occurred. (char frequency)
- *TODO Find a way to include all .txt files' encoding
- * For some reason the app currently works with everything but latin chars
- * The app works with greek chars so through testing you can input a file in Greek
- * Tried solutions:
- * Added UTF-8 collation in the BufferedReader line
- * Used other java classes instead of BufferedReader
- * Changed the printCharFrequency method
+ *
  */
 public class Project03Main {
 
