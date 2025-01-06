@@ -24,44 +24,29 @@ public class Project04MainFinal {
     static String[] board; //One dimensional board to be printed and handled
     static String currentPlayer; //Determines the current player, First player is always X
     static String currentPlayerName; //The current player's name as input by each user. Alternates between the two.
-
+    static String playerOne;
+    static String playerTwo;
     //Check each line and diagonal for win condition
     //Compare line variable string with each line of grid
     //Determine winner or tie
     static String checkWinner() {
 
-        for (int a = 0; a < 8; a++) {
-            String line = null;
-            //Cases 0 to 3 check horizontal lines
-            //Cases 3 to 5 check vertical lines
-            //Cases 6 to 7 check diagonal lines
-            //If a reaches a = 8 then no win condition was found so it's a draw
-            switch (a) {
-                case 0:
-                    line = board[0] + board[1] + board[2];
-                    break;
-                case 1:
-                    line = board[3] + board[4] + board[5];
-                    break;
-                case 2:
-                    line = board[6] + board[7] + board[8];
-                    break;
-                case 3:
-                    line = board[0] + board[3] + board[6];
-                    break;
-                case 4:
-                    line = board[1] + board[4] + board[7];
-                    break;
-                case 5:
-                    line = board[2] + board[5] + board[8];
-                    break;
-                case 6:
-                    line = board[0] + board[4] + board[8];
-                    break;
-                case 7:
-                    line = board[2] + board[4] + board[6];
-                    break;
-            }
+        for (int i = 0; i < 8; i++) {
+            String line = switch (i) {
+                case 0 -> board[0] + board[1] + board[2];
+                case 1 -> board[3] + board[4] + board[5];
+                case 2 -> board[6] + board[7] + board[8];
+                case 3 -> board[0] + board[3] + board[6];
+                case 4 -> board[1] + board[4] + board[7];
+                case 5 -> board[2] + board[5] + board[8];
+                case 6 -> board[0] + board[4] + board[8];
+                case 7 -> board[2] + board[4] + board[6];
+                default -> null;
+                //Cases 0 to 3 check horizontal lines
+                //Cases 3 to 5 check vertical lines
+                //Cases 6 to 7 check diagonal lines
+                //If a reaches a = 8 then no win condition was found so it's a draw
+            };
             //X wins
             if (line.equals("XXX")) {
                 return "X";
@@ -72,12 +57,13 @@ public class Project04MainFinal {
             }
         }
 
-        for (int a = 0; a < 9; a++) {
+        for (int i = 0; i < 9; i++) {
             //Temporarily converts board to a list and checks if the playerChoice is already on the board and breaks
-            if (Arrays.asList(board).contains(String.valueOf(a + 1))) {
+            if (Arrays.asList(board).contains(String.valueOf(i + 1))) {
                 break;
             }
-            else if (a == 8) {
+            //No winning moves can be played
+            else if (i == 8) {
                 return "draw";
             }
         }
@@ -92,9 +78,6 @@ public class Project04MainFinal {
         board = new String[9];
         currentPlayer = "X";
         String winner = null;
-        String playerOne;
-        String playerTwo;
-
 
         //Populate the board with numbers from 1 to 9
         //This is essential because we need a way to match the board
@@ -113,53 +96,27 @@ public class Project04MainFinal {
         System.out.println(currentPlayerName + " will play first. Choose wisely");
 
         while (winner == null) {
-            int playerChoice;
 
-            // Exception handling for playerChoice input
-            try {
-                playerChoice = in.nextInt();
-                if (!(playerChoice > 0 && playerChoice <= 9)) {
-                    System.out.println("Invalid input; re-enter slot number:");
-                    in.nextLine(); // Consume the newline character left by nextInt()
-                    continue;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input; please enter a number between 1 and 9:");
-                in.nextLine(); // Consume the invalid input
-                continue;
-            }
-
-            // Check for current player's turn
-            // Populates the board with player's playerChoice
-            // Alternate currentPlayer string to change player's turn
-            if (board[playerChoice - 1].equals(String.valueOf(playerChoice))) {
-                board[playerChoice - 1] = currentPlayer;
-
-                if (currentPlayer.equals("X")) {
-                    currentPlayer = "O";
-                    currentPlayerName = playerTwo;
-                } else {
-                    currentPlayer = "X";
-                    currentPlayerName = playerOne;
-                }
-                printBoard();
-                winner = checkWinner();
+            playTurn(in);
+            //Swap player names
+            if (currentPlayer.equals(playerOne)) {
+                currentPlayerName = playerTwo;
             } else {
-                System.out.println("Slot already taken; re-enter slot number:");
+                currentPlayerName = playerOne;
             }
-        }
+            winner = checkWinner();
 
+        }
         //Checks for winner through static winner String
         //Prints draw if no win condition was met
         if (winner.equalsIgnoreCase("draw")) {
             System.out.println("It's a draw! Thanks for playing.");
         }
         //Prints winner when the win condition is met
-        else if (Objects.equals(currentPlayer, "O")){
+        else if (Objects.equals(currentPlayer, "O")) {
             System.out.println("Congratulations! " + playerOne + " You win!");
             System.out.println("Thanks for playing.");
-        }
-        else if(Objects.equals(currentPlayer, "X")){
+        } else if (Objects.equals(currentPlayer, "X")) {
             System.out.println("Congratulations! " + playerTwo + " You win!");
             System.out.println("Thanks for playing.");
         }
@@ -175,12 +132,47 @@ public class Project04MainFinal {
      * | 7 | 8 | 9 |
      * |-----------|
      */
-    static void printBoard() {
+    static void printBoard () {
 
         System.out.println("|-----------|");
         System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
         System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
         System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
         System.out.println("|-----------|");
+    }
+
+    public static void playTurn (Scanner in){
+        int playerChoice;
+
+        // Exception handling for playerChoice input
+        while (true) {
+            try {
+                playerChoice = in.nextInt();
+                if (playerChoice > 0 && playerChoice <= 9) {
+                    break; // Exit the loop if input is valid
+                } else {
+                    System.out.println("Invalid input; re-enter slot number:");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input; re-enter slot number:");
+                in.nextLine(); // Consume invalid input
+            }
+        }
+
+        // Check if the chosen slot is available
+        if (board[playerChoice - 1].equals(String.valueOf(playerChoice))) {
+            board[playerChoice - 1] = currentPlayer;
+
+            // Alternate between players
+            if (currentPlayer.equals("X")) {
+                currentPlayer = "O";
+            } else {
+                currentPlayer = "X";
+            }
+            printBoard();
+        } else {
+            System.out.println("Slot already taken; re-enter slot number:");
+            playTurn(in); // Recursively call playTurn if the slot is already taken
+        }
     }
 }
