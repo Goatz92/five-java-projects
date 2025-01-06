@@ -48,7 +48,7 @@ public class Project03Main {
             int ch;
             while ((ch = br.read()) != -1) {
                 // Ignore whitespaces
-                if (Character.isWhitespace(ch)) {
+                if (Character.isWhitespace(ch) || !Character.isLetter(ch)) {
                     continue;
                 }
                 updateCharCount(ch, charCount);
