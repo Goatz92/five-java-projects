@@ -17,6 +17,7 @@ import java.util.*;
  *     For the diagonals simply use position 0, 4 and 8 and vice versa(2, 4, 6)
  *     And for columns use positions 0, 3, 6
  */
+
 public class Project04MainFinal {
 
     static String[] board; //One dimensional board to be printed and handled
@@ -45,22 +46,23 @@ public class Project04MainFinal {
         currentPlayerName = playerOne;
         System.out.println("Player Two: Please enter a name");
         playerTwo = in.nextLine();
-        System.out.println(currentPlayerName + " will play first. Choose wisely");
+        System.out.println(playerOne + " will play first. Choose wisely");
 
         while (winner == null) {
 
             playTurn(in);
             //Swap player names
-            if (currentPlayer.equals(playerOne)) {
+            if (currentPlayerName.equals(playerOne)) {
                 currentPlayerName = playerTwo;
             } else {
                 currentPlayerName = playerOne;
             }
+            System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
             winner = checkWinner();
 
         }
         //Checks for winner through static winner String
-        //Prints draw if no win condition was met
+        //Prints draw if no win conditions were met
         if (winner.equalsIgnoreCase("draw")) {
             System.out.println("It's a draw! Thanks for playing.");
         }
@@ -135,8 +137,6 @@ public class Project04MainFinal {
             }
         }
 
-        // Prints each player's choice on the board
-        System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
         return null;
     }
 
