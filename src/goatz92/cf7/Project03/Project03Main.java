@@ -24,7 +24,7 @@ public class Project03Main {
         String[][] charCount = new String[ARRAY_SIZE][2];
 
         // Read the file and populate the character count array
-        fileInputCharCount(filePath, charCount);
+        fileInputAndSort(filePath, charCount);
 
         // Sort and display the results
         printCharFrequency(charCount);
@@ -37,7 +37,7 @@ public class Project03Main {
      * @param filePath The path to the .txt file to read.
      * @param charCount Array that stores char count
      */
-    public static void fileInputCharCount(String filePath, String[][] charCount) {
+    public static void fileInputAndSort(String filePath, String[][] charCount) {
 
         for (int i = 0; i < ARRAY_SIZE; i++) {
             charCount[i][0] = null;
@@ -51,7 +51,7 @@ public class Project03Main {
                 if (Character.isWhitespace(ch) || !Character.isLetter(ch)) {
                     continue;
                 }
-                updateCharCount(ch, charCount);
+                charCount(ch, charCount);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class Project03Main {
      * @param ch The character to count.
      * @param charCount The array to store character counts.
      */
-    public static void updateCharCount(int ch, String[][] charCount) {
+    public static void charCount(int ch, String[][] charCount) {
 
         for (int i = 0; i < ARRAY_SIZE; i++) {
             if (charCount[i][0] != null && charCount[i][0].charAt(0) == ch) {
