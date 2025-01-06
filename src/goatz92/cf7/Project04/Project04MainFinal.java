@@ -6,21 +6,18 @@ import java.util.*;
 
 /**
  * Demo Tic Tac Toe game app
+ *     In previous versions I tried to implement a different way to describe the board
+ *     Tried to create two different 2D arrays
+ *     One for the player named String[][]board
+ *     And one for the program named int[][]grid
+ *     I found out this was redundant because the board doesn't need to be two-dimensional.
+ *     Making the board "grid" one-dimensional simplifies it's use and coding methods.
+ *     We can think of the grid as:
+ *     For the array's positions 0 through 2 we have the first row and so on.
+ *     For the diagonals simply use position 0, 4 and 8 and vice versa(2, 4, 6)
+ *     And for columns use positions 0, 3, 6
  */
 public class Project04MainFinal {
-
-    /*
-    In previous versions I tried to implement a different way to describe the board
-    Tried to create two different 2D arrays
-    One for the player named String[][]board
-    And one for the program named int[][]grid
-    I found out this was redundant because the board doesn't need to be two-dimensional.
-    Making the board "grid" one-dimensional simplifies it's use and coding methods.
-    We can think of the grid as:
-    For the array's positions 0 through 2 we have the first row and so on.
-    For the diagonals simply use position 0, 4 and 8 and vice versa(2, 4, 6)
-    And for columns use positions 0, 3, 6
-     */
 
     static String[] board; //One dimensional board to be printed and handled
     static String currentPlayer; //Determines the current player, First player is always X
