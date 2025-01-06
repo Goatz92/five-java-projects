@@ -115,37 +115,36 @@ public class Project04MainFinal {
         while (winner == null) {
             int playerChoice;
 
-            //Exception handling for playerChoice input
+            // Exception handling for playerChoice input
             try {
                 playerChoice = in.nextInt();
                 if (!(playerChoice > 0 && playerChoice <= 9)) {
                     System.out.println("Invalid input; re-enter slot number:");
+                    in.nextLine(); // Consume the newline character left by nextInt()
                     continue;
                 }
-            }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input; re-enter slot number:");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input; please enter a number between 1 and 9:");
+                in.nextLine(); // Consume the invalid input
                 continue;
             }
 
-            //Check for current player's turn
-            //Populates the board with player's playerChoice
-            //Alternate currentPlayer string to change player's turn
+            // Check for current player's turn
+            // Populates the board with player's playerChoice
+            // Alternate currentPlayer string to change player's turn
             if (board[playerChoice - 1].equals(String.valueOf(playerChoice))) {
                 board[playerChoice - 1] = currentPlayer;
 
                 if (currentPlayer.equals("X")) {
                     currentPlayer = "O";
                     currentPlayerName = playerTwo;
-                }
-                else {
+                } else {
                     currentPlayer = "X";
                     currentPlayerName = playerOne;
                 }
                 printBoard();
                 winner = checkWinner();
-            }
-            else {
+            } else {
                 System.out.println("Slot already taken; re-enter slot number:");
             }
         }
