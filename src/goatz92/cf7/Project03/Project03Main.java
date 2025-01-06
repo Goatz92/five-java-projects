@@ -12,7 +12,9 @@ import java.util.Arrays;
  * The columns of the array represent the number of times the char has occurred.
  * Ignores white spaces by use of Character.isWhitespace java class.
  * Prints how many times every char has occurred. (char frequency)
- *
+ *TODO Tried app in two different systems (Laptop with German Windows and Desktop with English Windows)
+ * On laptop it worked as intended but on PC it read everything BUT latin characters
+ * Find out why and solve.
  */
 public class Project03Main {
 
