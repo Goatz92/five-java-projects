@@ -21,57 +21,12 @@ public class Project04MainFinal {
     For the diagonals simply use position 0, 4 and 8 and vice versa(2, 4, 6)
     And for columns use positions 0, 3, 6
      */
+
     static String[] board; //One dimensional board to be printed and handled
     static String currentPlayer; //Determines the current player, First player is always X
     static String currentPlayerName; //The current player's name as input by each user. Alternates between the two.
     static String playerOne;
     static String playerTwo;
-    //Check each line and diagonal for win condition
-    //Compare line variable string with each line of grid
-    //Determine winner or tie
-    static String checkWinner() {
-
-        for (int i = 0; i < 8; i++) {
-            String line = switch (i) {
-                case 0 -> board[0] + board[1] + board[2];
-                case 1 -> board[3] + board[4] + board[5];
-                case 2 -> board[6] + board[7] + board[8];
-                case 3 -> board[0] + board[3] + board[6];
-                case 4 -> board[1] + board[4] + board[7];
-                case 5 -> board[2] + board[5] + board[8];
-                case 6 -> board[0] + board[4] + board[8];
-                case 7 -> board[2] + board[4] + board[6];
-                default -> null;
-                //Cases 0 to 3 check horizontal lines
-                //Cases 3 to 5 check vertical lines
-                //Cases 6 to 7 check diagonal lines
-                //If a reaches a = 8 then no win condition was found so it's a draw
-            };
-            //X wins
-            if (line.equals("XXX")) {
-                return "X";
-            }
-            // O wins
-            else if (line.equals("OOO")) {
-                return "O";
-            }
-        }
-
-        for (int i = 0; i < 9; i++) {
-            //Temporarily converts board to a list and checks if the playerChoice is already on the board and breaks
-            if (Arrays.asList(board).contains(String.valueOf(i + 1))) {
-                break;
-            }
-            //No winning moves can be played
-            else if (i == 8) {
-                return "draw";
-            }
-        }
-
-        // Prints each player's choice on the board
-        System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
-        return null;
-    }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -141,6 +96,60 @@ public class Project04MainFinal {
         System.out.println("|-----------|");
     }
 
+    //Check each line and diagonal for win condition
+    //Compare line variable string with each line of grid
+    //Determine winner or tie
+    static String checkWinner() {
+
+        for (int i = 0; i < 8; i++) {
+            String line = switch (i) {
+                case 0 -> board[0] + board[1] + board[2];
+                case 1 -> board[3] + board[4] + board[5];
+                case 2 -> board[6] + board[7] + board[8];
+                case 3 -> board[0] + board[3] + board[6];
+                case 4 -> board[1] + board[4] + board[7];
+                case 5 -> board[2] + board[5] + board[8];
+                case 6 -> board[0] + board[4] + board[8];
+                case 7 -> board[2] + board[4] + board[6];
+                default -> null;
+                //Cases 0 to 3 check horizontal lines
+                //Cases 3 to 5 check vertical lines
+                //Cases 6 to 7 check diagonal lines
+                //If a reaches a = 8 then no win condition was found so it's a draw
+            };
+            //X wins
+            if (line.equals("XXX")) {
+                return "X";
+            }
+            // O wins
+            else if (line.equals("OOO")) {
+                return "O";
+            }
+        }
+
+        for (int i = 0; i < 9; i++) {
+            //Temporarily converts board to a list and checks if the playerChoice is already on the board and breaks
+            if (Arrays.asList(board).contains(String.valueOf(i + 1))) {
+                break;
+            }
+            //No winning moves can be played
+            else if (i == 8) {
+                return "draw";
+            }
+        }
+
+        // Prints each player's choice on the board
+        System.out.println(currentPlayerName + "'s turn; enter a slot number to place " + currentPlayerName + " in:");
+        return null;
+    }
+
+    /**
+     * Asks the current player for a move (playerChoice)
+     * Checks if the move is valid (needs to be an int from 1 to 9)
+     * Then checks if the move is valid by checking if the slot in the array is already taken
+     * Then if not, swaps players
+     * @param in Scanner for move inputs
+     */
     public static void playTurn (Scanner in){
         int playerChoice;
 
