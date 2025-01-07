@@ -95,9 +95,12 @@ public class Project04MainFinal {
         System.out.println("|-----------|");
     }
 
-    //Check each line and diagonal for win condition
-    //Compare line variable string with each line of grid
-    //Determine winner or tie
+    /**
+     * Check each line and diagonal for win condition
+     * Compare line variable string with each line of grid
+     * Determine winner or tie
+     * @return Value for String winner, ("X", "O", "draw")
+     */
     public static String checkWinner() {
 
         for (int i = 0; i < 8; i++) {
