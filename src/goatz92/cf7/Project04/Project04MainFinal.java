@@ -98,7 +98,7 @@ public class Project04MainFinal {
     //Check each line and diagonal for win condition
     //Compare line variable string with each line of grid
     //Determine winner or tie
-    static String checkWinner() {
+    public static String checkWinner() {
 
         for (int i = 0; i < 8; i++) {
             String line = switch (i) {
